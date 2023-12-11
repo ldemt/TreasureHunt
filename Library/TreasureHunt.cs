@@ -86,6 +86,7 @@ namespace TreasureHunt
                 {
                     playerList[i].speed.X = -playerList[i].speed.X;
                 }
+
                 if (playerList[i].location.Y > ySize - tolerance || playerList[i].location.Y < 0 + tolerance)
                 {
                     playerList[i].speed.Y = -playerList[i].speed.Y;
@@ -96,7 +97,6 @@ namespace TreasureHunt
             }
 
         }
-
 
 
     }
@@ -159,15 +159,15 @@ namespace TreasureHunt
 
     }
 
-    public class CoolPlayer : Player
+    public class CustomPlayer : Player
     {
         public string coolness;
 
-        public CoolPlayer() : base()
+        public CustomPlayer(double x, double y) : base(x,y)
         {
- 
-            coolness = "verycool";
+            coolness = "very cool";
         }
+
 
     }
 
