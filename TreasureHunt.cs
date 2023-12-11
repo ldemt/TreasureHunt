@@ -171,7 +171,7 @@ namespace TreasureHunt
             return location;
         }
 
-        public void Move()
+        public virtual void Move()
         {
             location = Vector3d.Add(location, speed);
             stepsNumber++;
