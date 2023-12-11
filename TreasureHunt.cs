@@ -13,10 +13,6 @@ using Grasshopper.Kernel.Types;
 
 namespace TreasureHunt
 {
-    public class TreasureHunt
-    {
-    }
-
 
 
     // static Game StaticGame { get; set; }
@@ -112,7 +108,6 @@ namespace TreasureHunt
 
     }
 
-
     public class Treasure
     {
         // Properties
@@ -133,8 +128,8 @@ namespace TreasureHunt
     {
 
         // PROPERTIES
-        private Vector3d location;
-        private int stepsNumber;
+        public Vector3d location;
+        public int stepsNumber;
         public Vector3d speed;
 
         public string statusMessage;
@@ -180,6 +175,128 @@ namespace TreasureHunt
         }
 
     }
+
+    public class CoolPlayer : Player
+    {
+        public string coolness;
+
+        public CoolPlayer() : base()
+        {
+ 
+            coolness = "verycool";
+        }
+
+
+    }
+
+    //public class Lead : Player
+    //{
+    //    public int directionChangeInterval;
+    //    public int directionChangeCountdown;
+    //    public Vector3d acceleration;
+
+    //    public Lead(double startX, double startY, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, int changeInterval)
+    //      : base(startX, startY, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY)
+    //    {
+    //        directionChangeInterval = changeInterval;
+    //        directionChangeCountdown = directionChangeInterval;
+    //    }
+
+    //    public override void Move()
+    //    {
+    //        if (directionChangeCountdown <= 0)
+    //        {
+    //            // Change direction after countdown reaches zero
+    //            ChangeDirection();
+    //            directionChangeCountdown = directionChangeInterval;
+    //        }
+    //        else
+    //        {
+    //            // Keep moving in the current direction
+    //            //MoveInDirection(preferredDirections[0]);
+    //            directionChangeCountdown--;
+    //        }
+
+    //        speed = Vector3d.Add(speed, acceleration);
+    //        location = Vector3d.Add(location, speed);
+    //        stepsNumber++;
+
+    //        statusMessage = string.Format("number of steps : {0}, lowerBoundX : {1:0.00}, higherBoundX : {2:0.00}", stepsNumber, lowerBoundX, higherBoundX);
+
+
+    //    }
+
+    //    private void ChangeDirection()
+    //    {
+    //        this.speed.X = 1 * 2 - 1;
+    //        this.speed.Y = 1 * 2 - 1;
+
+    //        //this.speed.X = RandomProvider.Instance.NextDouble() * 2 - 1;
+    //        //this.speed.Y = RandomProvider.Instance.NextDouble() * 2 - 1;
+    //    }
+
+    //    //public static class RandomProvider
+    //    //{
+    //    //    private static readonly Random _random = new Random();
+
+    //    //    public static Random Instance
+    //    //    {
+    //    //        get { return _random; }
+    //    //    }
+    //    //}
+    //}
+
+    //public class Follower : Player
+    //{
+    //    public Lead master;
+    //    public double randomDirectionChangeProbability;
+
+    //    public Follower(double startX, double startY, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Lead masterAgent, double randomChangeProb)
+    //      : base(startX, startY, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY)
+    //    {
+    //        master = masterAgent;
+    //        randomDirectionChangeProbability = randomChangeProb;
+    //    }
+
+    //    public override void Move()
+    //    {
+    //        // Simulate movement of the slave agent
+    //        Vector3d directionToMaster = Vector3d.Subtract(master.GetLocation(), location);
+    //        double magnitude = directionToMaster.Length;
+
+    //        if (magnitude < 20)
+    //        {
+    //            double desiredMag = Map(magnitude, 0, 20, 0, 0.75);
+    //            directionToMaster.Unitize();
+    //            directionToMaster *= desiredMag;
+
+    //        }
+    //        else
+    //        {
+    //            // Follow the master's path with slight deviation
+    //            directionToMaster.Unitize();
+    //            directionToMaster *= 0.75; // Adjust this value for the desired follow distance
+    //        }
+
+    //        speed = directionToMaster; // Set the acceleration towards the master
+
+
+    //        //speed = Vector3d.Add(speed, acceleration);
+    //        location = Vector3d.Add(location, speed);
+    //        stepsNumber++;
+
+    //        statusMessage = string.Format("number of steps : {0}, lowerBoundX : {1:0.00}, higherBoundX : {2:0.00}", stepsNumber, lowerBoundX, higherBoundX);
+
+
+    //        //Move(); // Call the base move method from Player class
+    //    }
+
+    //    public static double Map(double value, double fromSource, double toSource, double fromTarget, double toTarget)
+    //    {
+    //        return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
+    //    }
+
+    //}
 
 
 }

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureHunt", "TreasureHunt.csproj", "{F5407854-905A-4810-884D-439735F401EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreasureHunt", "TreasureHunt.csproj", "{F5407854-905A-4810-884D-439735F401EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAppTHunt", "..\TestAppTHunt\TestAppTHunt.csproj", "{D97EA1C8-2DDC-4C0E-AFD4-EBCAAC5A5EDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F5407854-905A-4810-884D-439735F401EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5407854-905A-4810-884D-439735F401EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5407854-905A-4810-884D-439735F401EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97EA1C8-2DDC-4C0E-AFD4-EBCAAC5A5EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97EA1C8-2DDC-4C0E-AFD4-EBCAAC5A5EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97EA1C8-2DDC-4C0E-AFD4-EBCAAC5A5EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97EA1C8-2DDC-4C0E-AFD4-EBCAAC5A5EDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
