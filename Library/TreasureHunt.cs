@@ -170,6 +170,7 @@ namespace TreasureHunt
 
 
     }
+    public class AhmedPlayer : Player { }
 
 
 }
