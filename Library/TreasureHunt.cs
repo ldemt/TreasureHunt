@@ -178,7 +178,7 @@ namespace TreasureHunt
         public Vector3d location;
         public Vector3d speed;
 
-        public Player(Vector3d myLocation, Vector3d mySpeed)
+        public AlonsoPlayer(Vector3d myLocation, Vector3d mySpeed)
         {
 
             // Initialize with input values for speed and location (for the example)
@@ -194,6 +194,65 @@ namespace TreasureHunt
         }
 
     }
+
+
+
+    public class WormHole : wormhole
+        class WormHole
+    {
+        // Properties
+        public Vector3d location;
+        public Vector3d outpoint;
+        public double wormholeSize;
+
+        // Constructor
+
+        public WormHole()
+        {
+            location = new Vector3d(0, 0, 0);
+            outpoint = new Vector3d(200, 100, 0);
+        }
+
+        public WormHole(double x, double y, double myWormholeSize)
+        {
+            location = new Vector3d(x, y, 0);
+            // the old "tolerance" value, is now class property called wormholeSize, taken as an input in constructor
+            wormholeSize = myWormholeSize;
+            outpoint = new Vector3d(200, 100, 0);
+
+        }
+
+        // Methods
+
+        public void UpdatePlayers(List<Player> playerList)
+        {
+
+            // tolerance is now rewritten as "wormholeSize" and is a class property
+
+
+            // Same method as we worked together in class, it works, didnt changed anything
+            for (int i = 0; i < playerList.Count; i++)
+            {
+
+                if (playerList[i].location.X <= location.X + wormholeSize && playerList[i].location.X >= location.X - wormholeSize)
+                {
+
+                    if (playerList[i].location.Y <= location.Y + wormholeSize && playerList[i].location.Y >= location.Y - wormholeSize)
+
+                    {
+                        playerList[i].location.X = outpoint.X;
+                        playerList[i].location.Y = outpoint.Y;
+                    }
+
+                }
+            }
+
+        }
+
+
+    }
+
+
 
 
 }
