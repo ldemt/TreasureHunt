@@ -170,6 +170,6 @@ namespace TreasureHunt
 
 
     }
-
+    public class TinPlayer : Player { }
 
 }
