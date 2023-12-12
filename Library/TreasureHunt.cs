@@ -162,6 +162,7 @@ namespace TreasureHunt
     public class AlonsoPlayer : Player
     {
         public string coolness;
+        public string someChange;
 
         public AlonsoPlayer(double x, double y) : base(x,y)
         {
