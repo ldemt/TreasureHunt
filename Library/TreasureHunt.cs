@@ -48,7 +48,8 @@ namespace TreasureHunt
 
             CheckIsTreasureFound();
 
-            if (!isTreasureFound) {
+            if (!isTreasureFound)
+            {
 
                 MovePlayers();
             }
@@ -62,18 +63,18 @@ namespace TreasureHunt
             for (int i = 0; i < playerList.Count; i++)
             {
                 // Check if player is near treasure, if yes, put isTreasureFound to True
-                
 
-                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(),tolerance))
-                { 
-                isTreasureFound=true;
-                
+
+                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(), tolerance))
+                {
+                    isTreasureFound = true;
+
                 }
 
 
             }
 
-            }
+        }
         public void MovePlayers()
         {
 
@@ -119,31 +120,32 @@ namespace TreasureHunt
 
     public class Player
     {
-
-        // PROPERTIES
+        protected bool moveRight = true;
         public Vector3d location;
         public int stepsNumber;
         public Vector3d speed;
+        public Vector3d drift;
         public string statusMessage;
+        public double lowerBoundX;
+        public double lowerBoundY;
+        public double higherBoundX;
+        public double higherBoundY;
+        public bool treasureFound = false;
 
 
-        // Constructors
-        public Player()
-        {
-            location = new Vector3d(0, 0, 0);
-        }
+        public Player() { }
 
-        public Player(double x, double y)
+        public Player(double x, double y, double speedX, double speedY, double xBound, double yBound, double driftX, double driftY)
         {
             location = new Vector3d(x, y, 0);
-
-            // Sets a default speed
-            speed = new Vector3d(10, 10, 0);
-
-
+            speed = new Vector3d(speedX, speedY, 0);
+            drift = new Vector3d(driftX, driftY, 0);
+            lowerBoundX = 0;
+            lowerBoundY = 0;
+            higherBoundX = xBound;
+            higherBoundY = yBound;
         }
 
-        // Methods
         public Vector3d GetLocation()
         {
             return location;
@@ -151,25 +153,104 @@ namespace TreasureHunt
 
         public virtual void Move()
         {
-            location = Vector3d.Add(location, speed);
+
             stepsNumber++;
-
-            statusMessage = string.Format("number of steps : {0}", stepsNumber);
+            // statusMessage = "V-S Search";
         }
 
-    }
-
-    public class SelwynPlayer : Player
-    {
-        public string coolness;
-
-        public SelwynPlayer(double x, double y) : base(x,y)
+        public virtual void SetTreasureFound()
         {
-            coolness = "very cool";
+            treasureFound = true;
         }
-
-
     }
 
+    public class VictorSierraPlayer : Player
+    {
+        private double turnAngle = 120.0; // Angle to turn in degrees, this is specified by V-S standards but I am experimenting with changing this
+        private int triangleSize = 20; // Distance to move in the current step
+        private int stepsSinceTurn = 0; // Number of steps taken since the last turn
+        private int stepsSinceSkip = 0;
+        private bool turnClockwise = true; // Direction of the turn
+
+        public VictorSierraPlayer(double x, double y, double speedX, double speedY, double xBound, double yBound, double driftX, double driftY)
+          : base(x, y, speedX, speedY, xBound, yBound, driftX, driftY)
+        {
+        }
+
+        public override void Move()
+        {
+
+            location.X += moveRight ? (speed.X + drift.X) : (-speed.X + drift.X);
+            location.Y += speed.Y + drift.Y;
+
+            stepsNumber++;
+            stepsSinceTurn++;
+            stepsSinceSkip++;
+
+            // Check if it's time to turn
+
+            if (stepsSinceTurn >= triangleSize)
+            {
+                if (stepsSinceSkip <= triangleSize * 2)
+                {
+                    // Turn
+                    Turn();
+                }
+
+                // Reset steps since turn
+
+                stepsSinceTurn = 0;
+            }
+
+            if (stepsSinceSkip >= triangleSize * 3)
+            {
+
+                // Turn
+
+                stepsSinceSkip = 0;
+            }
+
+
+            // Wrap around the bounds
+            // Here simply if it reaches upper bound the y value returns to lower bound
+            // And the same with the X on the sides
+
+            if (location.X < lowerBoundX) location.X = higherBoundX;
+            else if (location.X > higherBoundX) location.X = lowerBoundX;
+
+            if (location.Y < lowerBoundY) location.Y = higherBoundY;
+            else if (location.Y > higherBoundY) location.Y = lowerBoundY;
+
+            if (treasureFound) statusMessage = "Treasure found!!";
+            else statusMessage = "V-S";
+
+        }
+
+        private void Turn()
+        {
+            // Change direction based on the turn
+
+            turnClockwise = turnClockwise;
+
+            // Update distance for the next step
+
+            // Rotate the speed vector based on the turn angle
+
+            double radians = turnAngle * (Math.PI / 180.0);
+            double newX = speed.X * Math.Cos(radians) - (turnClockwise ? 1 : -1) * speed.Y * Math.Sin(radians);
+            double newY = (turnClockwise ? 1 : -1) * speed.X * Math.Sin(radians) + speed.Y * Math.Cos(radians);
+
+            speed.X = newX;
+            speed.Y = newY;
+        }
+
+        private int CalculateStepsForDistance(double distance)
+        {
+            // Adjust this factor to control the smoothness of the turns
+
+            double factor = 0.1;
+            return (int)Math.Ceiling(distance / factor);
+        }
+    }
 
 }
