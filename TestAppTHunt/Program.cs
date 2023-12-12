@@ -40,7 +40,7 @@ namespace TestAppTHunt
             }
 
             // Declare and instantiate here one (or several ?) of your custom players
-            SelwynPlayer myCustomPlayer = new SelwynPlayer(10,10);
+            VictorSierraPlayer myCustomPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2);
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
 

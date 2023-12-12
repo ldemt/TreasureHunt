@@ -120,30 +120,29 @@ namespace TreasureHunt
 
     public class Player
     {
-        protected bool moveRight = true;
+        
         public Vector3d location;
         public int stepsNumber;
         public Vector3d speed;
-        public Vector3d drift;
+        
         public string statusMessage;
-        public double lowerBoundX;
-        public double lowerBoundY;
-        public double higherBoundX;
-        public double higherBoundY;
         public bool treasureFound = false;
 
 
         public Player() { }
 
-        public Player(double x, double y, double speedX, double speedY, double xBound, double yBound, double driftX, double driftY)
+        public Player(double x, double y)
+        {
+            location = new Vector3d(x, y, 0);
+            speed = new Vector3d(10, 10, 0);
+
+        }
+
+        public Player(double x, double y, double speedX, double speedY)
         {
             location = new Vector3d(x, y, 0);
             speed = new Vector3d(speedX, speedY, 0);
-            drift = new Vector3d(driftX, driftY, 0);
-            lowerBoundX = 0;
-            lowerBoundY = 0;
-            higherBoundX = xBound;
-            higherBoundY = yBound;
+            
         }
 
         public Vector3d GetLocation()
@@ -153,7 +152,7 @@ namespace TreasureHunt
 
         public virtual void Move()
         {
-
+            location = speed + location;
             stepsNumber++;
             // statusMessage = "V-S Search";
         }
@@ -171,10 +170,15 @@ namespace TreasureHunt
         private int stepsSinceTurn = 0; // Number of steps taken since the last turn
         private int stepsSinceSkip = 0;
         private bool turnClockwise = true; // Direction of the turn
+        public Vector3d drift;
+        protected bool moveRight = true;
 
-        public VictorSierraPlayer(double x, double y, double speedX, double speedY, double xBound, double yBound, double driftX, double driftY)
-          : base(x, y, speedX, speedY, xBound, yBound, driftX, driftY)
+        public VictorSierraPlayer(double x, double y, double speedX, double speedY, double driftX, double driftY)
+          : base(x, y, speedX, speedY)
         {
+
+            drift = new Vector3d(driftX, driftY, 0);
+
         }
 
         public override void Move()
@@ -211,6 +215,17 @@ namespace TreasureHunt
             }
 
 
+            
+
+            if (treasureFound) statusMessage = "Treasure found!!";
+            else statusMessage = "V-S";
+
+        }
+
+        public void TeleportAtBoundary(double lowerBoundX, double higherBoundX, double lowerBoundY, double higherBoundY)
+
+        {
+
             // Wrap around the bounds
             // Here simply if it reaches upper bound the y value returns to lower bound
             // And the same with the X on the sides
@@ -221,8 +236,6 @@ namespace TreasureHunt
             if (location.Y < lowerBoundY) location.Y = higherBoundY;
             else if (location.Y > higherBoundY) location.Y = lowerBoundY;
 
-            if (treasureFound) statusMessage = "Treasure found!!";
-            else statusMessage = "V-S";
 
         }
 
