@@ -34,7 +34,7 @@ namespace TreasureHunt
             Random random = new Random();
             double randomX = random.NextDouble() * xSize;
             double randomY = random.NextDouble() * ySize;
-
+            double modif = 100;
             treasure = new Treasure(randomX, randomY);
 
             playerList = new List<Player>();
