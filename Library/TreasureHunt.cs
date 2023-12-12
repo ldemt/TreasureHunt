@@ -159,14 +159,9 @@ namespace TreasureHunt
 
     }
 
-    public class CustomPlayer : Player
+    public class SpiralMovement : Player
     {
-        public string coolness;
-
-        public CustomPlayer(double x, double y) : base(x,y)
-        {
-            coolness = "very cool";
-        }
+      
 
 
     }
