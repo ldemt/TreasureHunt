@@ -159,11 +159,11 @@ namespace TreasureHunt
 
     }
 
-    public class CustomPlayer : Player
+    public class AlonsoPlayer : Player
     {
         public string coolness;
 
-        public CustomPlayer(double x, double y) : base(x,y)
+        public AlonsoPlayer(double x, double y) : base(x,y)
         {
             coolness = "very cool";
         }
