@@ -35,8 +35,10 @@ namespace TestAppTHunt
                 randomY = random.NextDouble() * ySize;
                 // Instantiate a moving ball
                 Player player = new Player(randomX, randomY);
+                HugoFollower follower = new HugoFollower(player);
                 // Add it to the list of balls belonging to the space.
                 StaticGame.playerList.Add(player);
+                StaticGame.playerList.Add(follower);
             }
 
             // Declare and instantiate here one (or several ?) of your custom players

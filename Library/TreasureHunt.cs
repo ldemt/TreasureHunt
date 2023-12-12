@@ -171,7 +171,7 @@ namespace TreasureHunt
 
     }
 
-    class HugoFollower : Player
+    public class HugoFollower : Player
     {
         // PROPERTIES
         Player leader;
