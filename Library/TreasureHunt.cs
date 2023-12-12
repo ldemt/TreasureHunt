@@ -172,4 +172,6 @@ namespace TreasureHunt
     }
 
 
+    public class LeoPlayer : Player { }
+
 }
