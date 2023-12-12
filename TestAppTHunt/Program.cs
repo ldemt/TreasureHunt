@@ -25,7 +25,7 @@ namespace TestAppTHunt
             StaticGame = new Game(xSize, ySize);
             // Generate and initialize the players
             Random random = new Random(7897999);
-
+            // ZigzagPlayer player = new TreasureHunt.ZigzagPlayer();
             double randomX;
             double randomY;
 
@@ -40,7 +40,9 @@ namespace TestAppTHunt
             }
 
             // Declare and instantiate here one (or several ?) of your custom players
-            CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
+            double x = 20;
+            double y = 20;
+            ZigzagPlayer myCustomPlayer = new ZigzagPlayer(x, y, 0, 0, 600, 300);
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
 

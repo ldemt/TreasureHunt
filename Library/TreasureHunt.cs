@@ -170,7 +170,87 @@ namespace TreasureHunt
 
 
     }
-    public class AhmedPlayer : Player { }
+    public class ZigzagPlayer : Player
+    {
 
+        // Properties
+        int limitCount;
+        double lowerBoundX;
+        double lowerBoundY;
+        double higherBoundX;
+        double higherBoundY;
+
+        // Declare the missing properties (lowerboundY, etc..)
+
+
+        // Constructor(s)
+
+        public ZigzagPlayer(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY)
+        {
+            location = new Vector3d(x, y, 0);
+            lowerBoundX = myLowerBoundX;
+            lowerBoundY = myLowerBoundY;
+            higherBoundX = 10;
+            higherBoundY = myHigherBoundY;
+            speed = GenerateRandomVector();
+
+        }
+
+        // Methods
+        public override void Move()
+        {
+
+            Vector3d newPosition = location + speed * 5;
+            double tolerance = 10;
+            // check and adjust for X boundaries
+            if (newPosition.X < lowerBoundX + tolerance)
+            {
+                newPosition.X = lowerBoundX + tolerance;
+                speed.X = -speed.X;//reverse X speed to bounce back
+            }
+            else if (newPosition.X > higherBoundX - tolerance)
+            {
+                newPosition.X = higherBoundX - tolerance;
+                speed.X = -speed.X;//reverse X speed to bounce back
+            }
+            // check and adjust for Y boundaries
+            if (newPosition.Y < lowerBoundY + tolerance)
+            {
+                newPosition.Y = lowerBoundY + tolerance;
+                speed.Y = -speed.Y;// Reverse Y speed to bounce back
+
+            }
+            else if (newPosition.Y > higherBoundY - tolerance)
+            {
+                newPosition.Y = higherBoundY - tolerance;
+                speed.Y = -speed.Y;
+            }
+
+            location = newPosition;
+            stepsNumber++;
+            limitCount++;
+
+            if (higherBoundX < 600)
+            {
+                if (limitCount > 50)
+                {
+                    higherBoundX = higherBoundX + 20;
+                    limitCount = 0;
+                }
+            }
+            statusMessage = string.Format("number of steps : {0}, lowerBoundX : {1}, higherBoundX : {2:0.00}", stepsNumber, lowerBoundX, higherBoundX, location);
+
+        }
+
+        public Vector3d GenerateRandomVector()
+        {
+            Random random = new Random();
+            double randomX = random.NextDouble() * 5 - 1;
+            double randomY = random.NextDouble() * 5 - 1;
+
+            return new Vector3d(randomX, randomY, 0);
+        }
+
+    }
 
 }
