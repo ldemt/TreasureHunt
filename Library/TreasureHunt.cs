@@ -159,7 +159,7 @@ namespace TreasureHunt
 
     }
 
-    public class AlonsoPlayer : Player
+  /*public class AlonsoPlayer : Player
     {
         public string coolness;
         public string someChange;
@@ -169,6 +169,29 @@ namespace TreasureHunt
             coolness = "very cool";
         }
 
+
+    }
+    */
+
+    public class AlonsoPlayer : Player
+    {
+        public Vector3d location;
+        public Vector3d speed;
+
+        public Player(Vector3d myLocation, Vector3d mySpeed)
+        {
+
+            // Initialize with input values for speed and location (for the example)
+            location = myLocation;
+            speed = mySpeed;
+
+        }
+
+        public virtual void Move()
+        {
+
+            location = location + speed;
+        }
 
     }
 
