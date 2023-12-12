@@ -154,6 +154,8 @@ namespace TreasureHunt
         {
             location = speed + location;
             stepsNumber++;
+
+            statusMessage = string.Format("number of steps : {0}", stepsNumber);
             // statusMessage = "V-S Search";
         }
 
