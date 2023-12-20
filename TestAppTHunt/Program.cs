@@ -33,10 +33,11 @@ namespace TestAppTHunt
             {
                 randomX = random.NextDouble() * xSize;
                 randomY = random.NextDouble() * ySize;
-                // Instantiate a moving ball
+                
                 Player player = new Player(randomX, randomY);
+                // Instantiate Hugo agents (one follower for each player)
                 HugoFollower follower = new HugoFollower(player);
-                // Add it to the list of balls belonging to the space.
+                // Add them to the list of players belonging to the space.
                 StaticGame.playerList.Add(player);
                 StaticGame.playerList.Add(follower);
             }
