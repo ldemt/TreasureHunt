@@ -46,9 +46,10 @@ namespace TestAppTHunt
             double x = 20;
             double y = 20;
             ZigzagPlayer myCustomPlayer = new ZigzagPlayer(x, y, 0, 0, 600, 300);
-            SpiralMovement myCustomPlayer = new SpiralMovement(20, 50);
+            SpiralMovement myCustomPlayer2 = new SpiralMovement(20, 50);
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
+            StaticGame.playerList.Add(myCustomPlayer2);
 
         }
 

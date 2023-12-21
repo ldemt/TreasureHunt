@@ -164,7 +164,7 @@ namespace TreasureHunt
         // Additional properties for bounds and speed
         double mySpeedX;
         double mySpeedY;
-
+        public double SpiralRadius { get; set; } = 10.0;
 
         // Constructor
         public SpiralMovement(double x, double y)
@@ -174,6 +174,27 @@ namespace TreasureHunt
             mySpeedY = 0.2;
         }
 
+
+        // Override the Move method to implement the spiral movement
+        public override void Move()
+        {
+            // Call the base class Move method to update the location based on the speed
+            base.Move();
+
+            // Implement the spiral movement logic here
+            double radius = SpiralRadius;
+            double angularSpeed = 0.6;
+
+            double angle = stepsNumber * angularSpeed;
+            double spiralX = (radius + (stepsNumber / 5)) * Math.Cos(angle);
+            double spiralY = (radius + (stepsNumber / 5)) * Math.Sin(angle);
+
+            // Update the location based on the spiral movement
+            location = new Vector3d(location.X + spiralX, location.Y + spiralY, 0);
+            double increase = stepsNumber / 2;
+            increase++;
+
+        }
 
     }
     public class ZigzagPlayer : Player
@@ -270,27 +291,6 @@ namespace TreasureHunt
         {
             leader = player;
         }
-        // Override the Move method to implement the spiral movement
-        public override void Move()
-        {
-            // Call the base class Move method to update the location based on the speed
-            base.Move();
-
-            // Implement the spiral movement logic here
-            double radius = SpiralRadius;
-            double angularSpeed = 0.6;
-
-            double angle = stepsNumber * angularSpeed;
-            double spiralX = (radius + (stepsNumber / 5)) * Math.Cos(angle);
-            double spiralY = (radius + (stepsNumber / 5)) * Math.Sin(angle);
-
-            // Update the location based on the spiral movement
-            location = new Vector3d(location.X + spiralX, location.Y + spiralY, 0);
-            double increase = stepsNumber / 2;
-            increase++;
-
-        }
-    }
 
         // METHODS
         public override void Move()
@@ -301,6 +301,10 @@ namespace TreasureHunt
             location.X = leader.GetLocation().X + radius * Math.Cos(rotationAngle);
             location.Y = leader.GetLocation().Y + radius * Math.Sin(rotationAngle);
         }
+
     }
 
-}
+        
+    }
+
+
