@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using TreasureHunt;
+using Rhino.Geometry;
 namespace TestAppTHunt
 {
     internal class Program
@@ -40,9 +41,12 @@ namespace TestAppTHunt
             }
 
             // Declare and instantiate here one (or several ?) of your custom players
-            CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
+            //CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
+            AlonsoPlayer alonsoPlayer = new AlonsoPlayer(new Vector3d(10,10,0), new Vector3d(1,1,0));
             // Add here your custom player to the player list!
-            StaticGame.playerList.Add(myCustomPlayer);
+
+            //StaticGame.playerList.Add(myCustomPlayer);
+            StaticGame.playerList.Add(alonsoPlayer);
 
         }
 

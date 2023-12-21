@@ -175,8 +175,6 @@ namespace TreasureHunt
 
     public class AlonsoPlayer : Player
     {
-        public Vector3d location;
-        public Vector3d speed;
 
         public AlonsoPlayer(Vector3d myLocation, Vector3d mySpeed)
         {
@@ -187,7 +185,7 @@ namespace TreasureHunt
 
         }
 
-        public virtual void Move()
+        public override void Move()
         {
 
             location = location + speed;
@@ -197,8 +195,8 @@ namespace TreasureHunt
 
 
 
-    public class WormHole : wormhole
-        class WormHole
+    public class WormHole 
+        
     {
         // Properties
         public Vector3d location;
