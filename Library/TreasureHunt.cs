@@ -27,7 +27,7 @@ namespace TreasureHunt
         public List<Obstacle> obstacles;
         public List<WormHole> wormholeList;
         // Constructor
-        public Game(double myXSize, double myYSize)
+        
         
 
         // Constructor
@@ -408,7 +408,8 @@ public class Treasure
         {
             leader = myLeader;
             follower = myFollower;
-
+        }
+    }
     public class AlonsoPlayer : Player
     {
 
