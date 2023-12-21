@@ -18,6 +18,7 @@ namespace TreasureHunt
         // Properties
 
         public List<Player> playerList;
+        public List<Team> teamList;
         public Treasure treasure;
         public bool isTreasureFound;
         public double xSize;
@@ -34,15 +35,23 @@ namespace TreasureHunt
             Random random = new Random();
             double randomX = random.NextDouble() * xSize;
             double randomY = random.NextDouble() * ySize;
-
+            double modif = 100;
             treasure = new Treasure(randomX, randomY);
 
             playerList = new List<Player>();
+            teamList = new List<Team>();
 
         }
 
         // Methods
+        public void UpdateTeams()
+        {
 
+            for (int i = 0; i < teamList.Count; i++)
+            {
+                teamList[i].MoveTeam();
+            }
+        }
         public void UpdatePlayers()
         {
 
@@ -51,10 +60,15 @@ namespace TreasureHunt
             if (!isTreasureFound) {
 
                 MovePlayers();
+                if (teamList.Count > 0)
+                {
+                    UpdateTeams();
+                }
             }
 
 
         }
+
         public void CheckIsTreasureFound()
         {
             double tolerance = 10;
@@ -292,6 +306,34 @@ namespace TreasureHunt
             leader = player;
         }
 
+
+    }
+
+    public class TinLeader : Player
+    {
+        public TinLeader(double x, double y)
+        : base(x, y) { }
+    }
+
+    public class TinFollower : Player
+    {
+        public double lowerBoundX;
+        public double lowerBoundY;
+        public double higherBoundX;
+        public double higherBoundY;
+
+        public TinFollower(double x, double y,double myHigherBoundX, double myHigherBoundY)
+        : base(x, y) {
+
+            lowerBoundX = 0;
+            lowerBoundY = 0;
+            higherBoundY = myHigherBoundY;
+            higherBoundX = myHigherBoundX;
+        }
+        public override void Move()
+        {
+            Vector3d randomVector = new Vector3d();
+
         // METHODS
         public override void Move()
         {
@@ -301,10 +343,46 @@ namespace TreasureHunt
             location.X = leader.GetLocation().X + radius * Math.Cos(rotationAngle);
             location.Y = leader.GetLocation().Y + radius * Math.Sin(rotationAngle);
         }
+            do
+            {
+                Random random = new Random();
+                randomVector.X = (random.NextDouble() * 2 - 1) * 20;
+            }
+            while (location.X + randomVector.X < lowerBoundX || location.X + randomVector.X > higherBoundX);
+            do
+            {
+                Random random = new Random();
+                randomVector.Y = (random.NextDouble() * 2 - 1) * 20;
+            }
+            while (location.Y + randomVector.Y < lowerBoundY || location.Y + randomVector.Y > higherBoundY);
+
+            location.X += randomVector.X;
+            location.Y += randomVector.Y;
+            location.Z += randomVector.Z;
+        }
+    }
+    public class Team
+    {
+        public TinLeader leader;
+        public TinFollower follower;
+        public Team(TinLeader myLeader, TinFollower myFollower)
+        {
+            leader = myLeader;
+            follower = myFollower;
+
+        }
+        public void MoveTeam()
+        {
+
+            leader.Move();
+            Point3d myLocation = new Point3d();
+            myLocation = (Point3d)leader.location;
+            follower.location.X = myLocation.X;
+            follower.location.Y = myLocation.Y;
+            follower.location.Z = myLocation.Z;
+
+            follower.Move();
+        }
 
     }
-
-        
-    }
-
-
+}
