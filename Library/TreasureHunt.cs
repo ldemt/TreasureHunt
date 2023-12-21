@@ -171,5 +171,10 @@ namespace TreasureHunt
 
     }
 
+    public class NewCustomPlayer : Player {
+ 
+    
+    
+    }
 
 }
