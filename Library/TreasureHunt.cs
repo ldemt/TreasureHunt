@@ -21,11 +21,13 @@ namespace TreasureHunt
         public List<Team> teamList;
         public Treasure treasure;
         public bool isTreasureFound;
+        public bool GenerateObstacle; 
         public double xSize;
         public double ySize;
-
-        // Constructor
-        public Game(double myXSize, double myYSize)
+        public List<Obstacle> obstacles;
+     
+    // Constructor
+    public Game(double myXSize, double myYSize)
         {
             xSize = myXSize;
             ySize = myYSize;
@@ -41,11 +43,21 @@ namespace TreasureHunt
             playerList = new List<Player>();
             teamList = new List<Team>();
 
+            obstacles = new List<Obstacle>();
+
+            obstacles = new List<Obstacle>();
+            
         }
 
         // Methods
         public void UpdateTeams()
         {
+        private void GenerateObstacles()
+        {
+            obstacles.Add(new Obstacle(100, 150, 10, 50));
+            obstacles.Add(new Obstacle(200, 250, 50, 10));
+            obstacles.Add(new Obstacle(400, 150, 50, 10));
+        }
 
             for (int i = 0; i < teamList.Count; i++)
             {
@@ -112,10 +124,16 @@ namespace TreasureHunt
 
         }
 
-
+    public void RotateObstacles()
+    {
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.Rotate();
+        }
     }
+}
 
-    public class Treasure
+public class Treasure
     {
         // Properties
         private Vector3d location;
@@ -384,6 +402,36 @@ namespace TreasureHunt
 
             follower.Move();
         }
+    // New class for obstacles
+    public class Obstacle
+    {
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double Width { get; private set; }
+        public double Height { get; private set; }
+        public double Rotation { get; private set; }
+        public double RotationSpeed { get; private set; }
 
+        // Constructor with four arguments
+        public Obstacle(double x, double y, double width, double height)
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+            Rotation = 15; // Initial rotation angle
+            RotationSpeed = 40; // Initial rotation speed
+        }
+
+        // Method to rotate the obstacle
+        public void Rotate()
+        {
+
+            Rotation += RotationSpeed;
+
+            // I can add logic here to handle rotation of the obstacle
+            // For example, updating the angle or performing rotation calculations
+            // based on the RotationSpeed
+        }
     }
 }
