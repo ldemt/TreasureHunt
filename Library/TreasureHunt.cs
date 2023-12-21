@@ -159,11 +159,11 @@ namespace TreasureHunt
 
     }
 
-    public class CustomPlayer : Player
+    public class ChangedCustomPlayer : Player
     {
         public string coolness;
 
-        public CustomPlayer(double x, double y) : base(x,y)
+        public ChangedCustomPlayer(double x, double y) : base(x,y)
         {
             coolness = "very cool";
         }
@@ -171,10 +171,6 @@ namespace TreasureHunt
 
     }
 
-    public class NewCustomPlayer : Player {
- 
-    
-    
-    }
+
 
 }
