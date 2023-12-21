@@ -20,9 +20,11 @@ namespace TreasureHunt
         public List<Player> playerList;
         public Treasure treasure;
         public bool isTreasureFound;
+        public bool GenerateObstacle; 
         public double xSize;
         public double ySize;
-
+        public List<Obstacle> obstacles;
+     
     // Constructor
     public Game(double myXSize, double myYSize)
         {
@@ -39,9 +41,19 @@ namespace TreasureHunt
 
             playerList = new List<Player>();
 
+            obstacles = new List<Obstacle>();
+
+            obstacles = new List<Obstacle>();
+            
         }
 
         // Methods
+        private void GenerateObstacles()
+        {
+            obstacles.Add(new Obstacle(100, 150, 10, 50));
+            obstacles.Add(new Obstacle(200, 250, 50, 10));
+            obstacles.Add(new Obstacle(400, 150, 50, 10));
+        }
 
         public void UpdatePlayers()
         {
@@ -98,10 +110,16 @@ namespace TreasureHunt
 
         }
 
-
+    public void RotateObstacles()
+    {
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.Rotate();
+        }
     }
+}
 
-    public class Treasure
+public class Treasure
     {
         // Properties
         private Vector3d location;
@@ -172,7 +190,7 @@ namespace TreasureHunt
     }
 
     // New class for obstacles
-    class Obstacle
+    public class Obstacle
     {
         public double X { get; private set; }
         public double Y { get; private set; }

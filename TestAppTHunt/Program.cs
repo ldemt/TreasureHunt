@@ -35,6 +35,9 @@ namespace TestAppTHunt
                 randomY = random.NextDouble() * ySize;
                 // Instantiate a moving ball
                 Player player = new Player(randomX, randomY);
+                
+                // add obstacle
+                Obstacle obstacle = new TreasureHunt.Obstacle(20,20,20,20);
                 // Add it to the list of balls belonging to the space.
                 StaticGame.playerList.Add(player);
             }
