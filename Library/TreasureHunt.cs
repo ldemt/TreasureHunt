@@ -23,8 +23,8 @@ namespace TreasureHunt
         public double xSize;
         public double ySize;
 
-        // Constructor
-        public Game(double myXSize, double myYSize)
+    // Constructor
+    public Game(double myXSize, double myYSize)
         {
             xSize = myXSize;
             ySize = myYSize;
@@ -171,5 +171,36 @@ namespace TreasureHunt
 
     }
 
+    // New class for obstacles
+    class Obstacle
+    {
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double Width { get; private set; }
+        public double Height { get; private set; }
+        public double Rotation { get; private set; }
+        public double RotationSpeed { get; private set; }
 
+        // Constructor with four arguments
+        public Obstacle(double x, double y, double width, double height)
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+            Rotation = 15; // Initial rotation angle
+            RotationSpeed = 40; // Initial rotation speed
+        }
+
+        // Method to rotate the obstacle
+        public void Rotate()
+        {
+
+            Rotation += RotationSpeed;
+
+            // I can add logic here to handle rotation of the obstacle
+            // For example, updating the angle or performing rotation calculations
+            // based on the RotationSpeed
+        }
+    }
 }
