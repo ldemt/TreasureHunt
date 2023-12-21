@@ -40,7 +40,7 @@ namespace TestAppTHunt
             }
 
             // Declare and instantiate here one (or several ?) of your custom players
-            CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
+            SpiralMovement myCustomPlayer = new SpiralMovement(20, 50);
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
 
@@ -53,7 +53,7 @@ namespace TestAppTHunt
             {
 
                 // Simulate some delay
-                Thread.Sleep(25);
+                Thread.Sleep(100);
                 StaticGame.UpdatePlayers();
                 //Console.SetCursorPosition(0, Console.CursorTop);
                 Console.SetCursorPosition(0, 1);
