@@ -62,18 +62,18 @@ namespace TreasureHunt
             for (int i = 0; i < playerList.Count; i++)
             {
                 // Check if player is near treasure, if yes, put isTreasureFound to True
-                
 
-                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(),tolerance))
-                { 
-                isTreasureFound=true;
-                
+
+                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(), tolerance))
+                {
+                    isTreasureFound = true;
+
                 }
 
 
             }
 
-            }
+        }
         public void MovePlayers()
         {
 
@@ -163,7 +163,7 @@ namespace TreasureHunt
     {
         public string coolness;
 
-        public CustomPlayer(double x, double y) : base(x,y)
+        public CustomPlayer(double x, double y) : base(x, y)
         {
             coolness = "very cool";
         }
@@ -171,5 +171,91 @@ namespace TreasureHunt
 
     }
 
+
+    public class HayderPlayer : Player
+    {
+
+        int limitCount;
+        double lowerBoundX;
+        double lowerBoundY;
+        double higherBoundX;
+        double higherBoundY;
+
+        // Flag to toggle the zigzag direction
+
+        private bool zigzagDirection = true;
+        private int movesBeforeTurn;
+
+        public HayderPlayer (double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d mySpeed)
+          : base (x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, mySpeed)
+        {
+            movesBeforeTurn = 0;
+        }
+
+        public override void Move()
+        {
+            movesBeforeTurn++;
+
+            double locTolerance = 10;
+
+            // Check if moving beyond bounds in X-axis and adjust speed to stay within bounds
+            if (location.X < lowerBoundX + locTolerance)
+            {
+                location.X = lowerBoundX + locTolerance + Math.Abs(speed.X);
+                speed.X = Math.Abs(speed.X); // Move forward in the X-axis
+
+                // Move up for 50 units
+                location.Y += 50;
+            }
+            else if (location.X > higherBoundX - locTolerance)
+            {
+                location.X = higherBoundX - locTolerance - Math.Abs(speed.X);
+                speed.X = -Math.Abs(speed.X); // Move backward in the X-axis
+
+                // Move up for 50 units
+                location.Y += 50;
+            }
+
+            // Check if moving beyond bounds in Y-axis and adjust speed to stay within bounds
+            if (location.Y > higherBoundY - locTolerance)
+            {
+                // Move down for 50 units
+                location.Y = higherBoundY - locTolerance - Math.Abs(speed.Y);
+                speed.Y = -Math.Abs(speed.Y); // Move downward in the Y-axis
+            }
+            else if (location.Y < lowerBoundY + locTolerance)
+            {
+                // Move up for 50 units
+                location.Y = lowerBoundY + locTolerance + Math.Abs(speed.Y);
+                speed.Y = Math.Abs(speed.Y); // Move upward in the Y-axis
+            }
+
+            // Zigzag movement
+            if (movesBeforeTurn > higherBoundY)
+            {
+                // Toggle the direction in the Y-axis
+                zigzagDirection = !zigzagDirection;
+
+                // Toggle between X and Y movement
+                if (zigzagDirection)
+
+                {
+                    speed.Y = -speed.Y;
+
+                }
+
+                movesBeforeTurn = 0;
+            }
+
+            // Move within boundaries
+            location.X += speed.X;
+            location.Y += speed.Y;
+
+            stepsNumber++;
+
+            statusMessage = string.Format("number of steps: {0}, lowerBoundX: {1:0.00}, higherBoundX: {2:0.00}", stepsNumber, lowerBoundX, higherBoundX);
+        }
+
+    }
 
 }
