@@ -50,14 +50,17 @@ namespace TreasureHunt
         }
 
         // Methods
-        public void UpdateTeams()
-        {
+
         private void GenerateObstacles()
         {
             obstacles.Add(new Obstacle(100, 150, 10, 50));
             obstacles.Add(new Obstacle(200, 250, 50, 10));
             obstacles.Add(new Obstacle(400, 150, 50, 10));
         }
+
+        public void UpdateTeams()
+        {
+        
 
             for (int i = 0; i < teamList.Count; i++)
             {
@@ -402,6 +405,7 @@ public class Treasure
 
             follower.Move();
         }
+    }
     // New class for obstacles
     public class Obstacle
     {
