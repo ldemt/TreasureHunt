@@ -171,5 +171,60 @@ namespace TreasureHunt
 
     }
 
+    public class Leader : Player
+    {
+        public Leader(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d myVectorSpeed, double myRadiusBoundaryOfPlayer)
+        : base(x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, myVectorSpeed, myRadiusBoundaryOfPlayer) { }
+    }
 
+    class Follower : Player
+    {
+        public Follower(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d myVectorSpeed, double myRadiusBoundaryOfPlayer)
+        : base(x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, myVectorSpeed, myRadiusBoundaryOfPlayer) { }
+        public override void Move()
+        {
+            Vector3d randomVector = new Vector3d();
+
+            do
+            {
+                Random random = new Random();
+                randomVector.X = (random.NextDouble() * 2 - 1) * 20;
+            }
+            while (location.X + randomVector.X < lowerBoundX || location.X + randomVector.X > higherBoundX);
+            do
+            {
+                Random random = new Random();
+                randomVector.Y = (random.NextDouble() * 2 - 1) * 20;
+            }
+            while (location.Y + randomVector.Y < lowerBoundY || location.Y + randomVector.Y > higherBoundY);
+
+            location.X += randomVector.X;
+            location.Y += randomVector.Y;
+            location.Z += randomVector.Z;
+        }
+    }
+    class Team
+    {
+        public Leader leader;
+        public Follower follower;
+        public Team(Leader myLeader, Follower myFollower)
+        {
+            leader = myLeader;
+            follower = myFollower;
+
+        }
+        public void MoveTeam()
+        {
+
+            leader.Move();
+            Point3d myLocation = new Point3d();
+            myLocation = leader.GetLocation();
+            follower.location.X = myLocation.X;
+            follower.location.Y = myLocation.Y;
+            follower.location.Z = myLocation.Z;
+
+            follower.Move();
+        }
+
+    }
 }
