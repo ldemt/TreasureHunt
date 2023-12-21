@@ -253,5 +253,27 @@ namespace TreasureHunt
 
     }
 
+    public class HugoFollower : Player
+    {
+        // PROPERTIES
+        Player leader;
+        double rotationAngle;
+
+        // CONSTRUCTOR
+        public HugoFollower(Player player)
+        {
+            leader = player;
+        }
+
+        // METHODS
+        public override void Move()
+        {
+            double radius = 15; // Set the radius of rotation
+            rotationAngle += 1.0; // Set the rotation speed
+
+            location.X = leader.GetLocation().X + radius * Math.Cos(rotationAngle);
+            location.Y = leader.GetLocation().Y + radius * Math.Sin(rotationAngle);
+        }
+    }
 
 }
