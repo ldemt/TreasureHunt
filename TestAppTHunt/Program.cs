@@ -44,6 +44,15 @@ namespace TestAppTHunt
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
 
+            // Adding Tin player classes
+            TinLeader tinLeader = new TinLeader(10,10);
+            TinFollower tinFollower = new TinFollower(10, 10, xSize, ySize);
+            Team team = new Team(tinLeader, tinFollower);
+
+            StaticGame.playerList.Add(tinLeader);
+            StaticGame.playerList.Add(tinFollower);
+            StaticGame.teamList.Add(team);
+
         }
 
         static void RunGame()

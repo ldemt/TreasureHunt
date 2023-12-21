@@ -18,6 +18,7 @@ namespace TreasureHunt
         // Properties
 
         public List<Player> playerList;
+        public List<Team> teamList;
         public Treasure treasure;
         public bool isTreasureFound;
         public double xSize;
@@ -38,11 +39,19 @@ namespace TreasureHunt
             treasure = new Treasure(randomX, randomY);
 
             playerList = new List<Player>();
+            teamList = new List<Team>();
 
         }
 
         // Methods
+        public void UpdateTeams()
+        {
 
+            for (int i = 0; i < teamList.Count; i++)
+            {
+                teamList[i].MoveTeam();
+            }
+        }
         public void UpdatePlayers()
         {
 
@@ -51,10 +60,15 @@ namespace TreasureHunt
             if (!isTreasureFound) {
 
                 MovePlayers();
+                if (teamList.Count > 0)
+                {
+                    UpdateTeams();
+                }
             }
 
 
         }
+
         public void CheckIsTreasureFound()
         {
             double tolerance = 10;
@@ -171,16 +185,27 @@ namespace TreasureHunt
 
     }
 
-    public class Leader : Player
+    public class TinLeader : Player
     {
-        public Leader(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d myVectorSpeed, double myRadiusBoundaryOfPlayer)
-        : base(x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, myVectorSpeed, myRadiusBoundaryOfPlayer) { }
+        public TinLeader(double x, double y)
+        : base(x, y) { }
     }
 
-    class Follower : Player
+    public class TinFollower : Player
     {
-        public Follower(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d myVectorSpeed, double myRadiusBoundaryOfPlayer)
-        : base(x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, myVectorSpeed, myRadiusBoundaryOfPlayer) { }
+        public double lowerBoundX;
+        public double lowerBoundY;
+        public double higherBoundX;
+        public double higherBoundY;
+
+        public TinFollower(double x, double y,double myHigherBoundX, double myHigherBoundY)
+        : base(x, y) {
+
+            lowerBoundX = 0;
+            lowerBoundY = 0;
+            higherBoundY = myHigherBoundY;
+            higherBoundX = myHigherBoundX;
+        }
         public override void Move()
         {
             Vector3d randomVector = new Vector3d();
@@ -203,11 +228,11 @@ namespace TreasureHunt
             location.Z += randomVector.Z;
         }
     }
-    class Team
+    public class Team
     {
-        public Leader leader;
-        public Follower follower;
-        public Team(Leader myLeader, Follower myFollower)
+        public TinLeader leader;
+        public TinFollower follower;
+        public Team(TinLeader myLeader, TinFollower myFollower)
         {
             leader = myLeader;
             follower = myFollower;
@@ -218,7 +243,7 @@ namespace TreasureHunt
 
             leader.Move();
             Point3d myLocation = new Point3d();
-            myLocation = leader.GetLocation();
+            myLocation = (Point3d)leader.location;
             follower.location.X = myLocation.X;
             follower.location.Y = myLocation.Y;
             follower.location.Z = myLocation.Z;
