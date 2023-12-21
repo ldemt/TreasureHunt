@@ -159,13 +159,19 @@ namespace TreasureHunt
 
     }
 
-    public class ChangedCustomPlayer : Player
+    public class SpiralMovement : Player
     {
-        public string coolness;
+        // Additional properties for bounds and speed
+        double mySpeedX;
+        double mySpeedY;
 
-        public ChangedCustomPlayer(double x, double y) : base(x,y)
+
+        // Constructor
+        public SpiralMovement(double x, double y)
+            : base(x, y)
         {
-            coolness = "very cool";
+            mySpeedX = 0.2;
+            mySpeedY = 0.2;
         }
 
 
@@ -264,6 +270,27 @@ namespace TreasureHunt
         {
             leader = player;
         }
+        // Override the Move method to implement the spiral movement
+        public override void Move()
+        {
+            // Call the base class Move method to update the location based on the speed
+            base.Move();
+
+            // Implement the spiral movement logic here
+            double radius = SpiralRadius;
+            double angularSpeed = 0.6;
+
+            double angle = stepsNumber * angularSpeed;
+            double spiralX = (radius + (stepsNumber / 5)) * Math.Cos(angle);
+            double spiralY = (radius + (stepsNumber / 5)) * Math.Sin(angle);
+
+            // Update the location based on the spiral movement
+            location = new Vector3d(location.X + spiralX, location.Y + spiralY, 0);
+            double increase = stepsNumber / 2;
+            increase++;
+
+        }
+    }
 
         // METHODS
         public override void Move()
