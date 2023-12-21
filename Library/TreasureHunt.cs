@@ -25,9 +25,13 @@ namespace TreasureHunt
         public double xSize;
         public double ySize;
         public List<Obstacle> obstacles;
-     
-    // Constructor
-    public Game(double myXSize, double myYSize)
+        public List<WormHole> wormholeList;
+        // Constructor
+        public Game(double myXSize, double myYSize)
+        
+
+        // Constructor
+        public Game(double myXSize, double myYSize)
         {
             xSize = myXSize;
             ySize = myYSize;
@@ -42,6 +46,7 @@ namespace TreasureHunt
 
             playerList = new List<Player>();
             teamList = new List<Team>();
+            wormholeList = new List<WormHole>();
 
             obstacles = new List<Obstacle>();
 
@@ -67,6 +72,13 @@ namespace TreasureHunt
                 teamList[i].MoveTeam();
             }
         }
+        public void UpdateWormholes()
+        {
+            for (int i = 0; i < wormholeList.Count; i++)
+            {
+                wormholeList[i].UpdatePlayers(playerList);
+            }
+        }
         public void UpdatePlayers()
         {
 
@@ -81,6 +93,11 @@ namespace TreasureHunt
                 }
             }
 
+            if (wormholeList.Count > 0)
+            {
+
+                UpdateWormholes();
+            }
 
         }
 
@@ -391,6 +408,82 @@ public class Treasure
         {
             leader = myLeader;
             follower = myFollower;
+
+    public class AlonsoPlayer : Player
+    {
+
+        public AlonsoPlayer(Vector3d myLocation, Vector3d mySpeed)
+        {
+
+            // Initialize with input values for speed and location (for the example)
+            location = myLocation;
+            speed = mySpeed;
+
+        }
+
+        public override void Move()
+        {
+
+            location = location + speed;
+        }
+
+    }
+
+
+
+    public class WormHole 
+        
+    {
+        // Properties
+        public Vector3d location;
+        public Vector3d outpoint;
+        public double wormholeSize;
+        public int teleportCount;
+        public string statusMessage;
+
+        // Constructor
+
+        public WormHole()
+        {
+            location = new Vector3d(0, 0, 0);
+            outpoint = new Vector3d(200, 100, 0);
+            teleportCount = 0;
+        }
+
+        public WormHole(double x, double y)
+        {
+            location = new Vector3d(x, y, 0);
+            // the old "tolerance" value, is now class property called wormholeSize, taken as an input in constructor
+            outpoint = new Vector3d(200, 100, 0);
+            teleportCount = 0;
+        }
+
+        // Methods
+
+        public void UpdatePlayers(List<Player> playerList)
+        {
+
+            // tolerance is now rewritten as "wormholeSize" and is a class property
+            double wormholeSize = 30;
+
+            // Same method as we worked together in class, it works, didnt changed anything
+            for (int i = 0; i < playerList.Count; i++)
+            {
+
+                if (playerList[i].location.X <= location.X + wormholeSize && playerList[i].location.X >= location.X - wormholeSize)
+                {
+
+                    if (playerList[i].location.Y <= location.Y + wormholeSize && playerList[i].location.Y >= location.Y - wormholeSize)
+
+                    {
+                        playerList[i].location.X = outpoint.X;
+                        playerList[i].location.Y = outpoint.Y;
+                        teleportCount++;
+                        statusMessage = string.Format("number of teleports : {0}", teleportCount);
+                    }
+
+                }
+            }
 
         }
         public void MoveTeam()
