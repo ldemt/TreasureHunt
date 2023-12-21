@@ -306,6 +306,15 @@ namespace TreasureHunt
             leader = player;
         }
 
+        // METHODS
+        public override void Move()
+        {
+            double radius = 15; // Set the radius of rotation
+            rotationAngle += 1.0; // Set the rotation speed
+
+            location.X = leader.GetLocation().X + radius * Math.Cos(rotationAngle);
+            location.Y = leader.GetLocation().Y + radius * Math.Sin(rotationAngle);
+        }
 
     }
 
@@ -333,16 +342,6 @@ namespace TreasureHunt
         public override void Move()
         {
             Vector3d randomVector = new Vector3d();
-
-        // METHODS
-        public override void Move()
-        {
-            double radius = 15; // Set the radius of rotation
-            rotationAngle += 1.0; // Set the rotation speed
-
-            location.X = leader.GetLocation().X + radius * Math.Cos(rotationAngle);
-            location.Y = leader.GetLocation().Y + radius * Math.Sin(rotationAngle);
-        }
             do
             {
                 Random random = new Random();
@@ -360,6 +359,8 @@ namespace TreasureHunt
             location.Y += randomVector.Y;
             location.Z += randomVector.Z;
         }
+
+            
     }
     public class Team
     {
