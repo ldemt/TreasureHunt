@@ -159,16 +159,22 @@ namespace TreasureHunt
 
     }
 
-    class SpiralMovement : Player
+    public class SpiralMovement : Player
     {
-        // Constructor
-        public SpiralMovement(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, double mySpeedX, double mySpeedY)
-            : base(x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, mySpeedX, mySpeedY)
-        {
+        // Additional properties for bounds and speed
+        double mySpeedX;
+        double mySpeedY;
 
+
+        // Constructor
+        public SpiralMovement(double x, double y)
+            : base(x, y)
+        {
+            mySpeedX = 0.2;
+            mySpeedY = 0.2;
         }
 
-        public double SpiralRadius { get; set; } = 15.0;
+        public double SpiralRadius { get; set; } = 10.0;
 
         // Override the Move method to implement the spiral movement
         public override void Move()
@@ -176,27 +182,20 @@ namespace TreasureHunt
             // Call the base class Move method to update the location based on the speed
             base.Move();
 
-
             // Implement the spiral movement logic here
-            double radius = 15; // You can adjust the radius of the spiral
-            double angularSpeed = 0.4; // You can adjust the angular speed of the spiral
+            double radius = SpiralRadius;
+            double angularSpeed = 0.6;
 
             double angle = stepsNumber * angularSpeed;
-            double spiralX = (radius + (stepsNumber / 80)) * Math.Cos(angle);
-            double spiralY = (radius + (stepsNumber / 80)) * Math.Sin(angle);
+            double spiralX = (radius + (stepsNumber / 5)) * Math.Cos(angle);
+            double spiralY = (radius + (stepsNumber / 5)) * Math.Sin(angle);
 
             // Update the location based on the spiral movement
-            location = new Vector3d(location.X + spiralX + mySpeedX, location.Y + spiralY + mySpeedY, 0);
-            stepsNumber++;
-
-            // Update the bounds based on the new location
-            lowerBoundX = location.X - SpiralRadius;
-            higherBoundX = location.X + SpiralRadius;
-            lowerBoundY = location.Y - SpiralRadius;
-            higherBoundY = location.Y + SpiralRadius;
+            location = new Vector3d(location.X + spiralX, location.Y + spiralY, 0);
+            double increase = stepsNumber / 2;
+            increase++;
 
         }
-
     }
 
 
