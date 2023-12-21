@@ -39,11 +39,19 @@ namespace TreasureHunt
             treasure = new Treasure(randomX, randomY);
 
             playerList = new List<Player>();
+            wormholeList = new List<WormHole>();
 
         }
 
         // Methods
 
+        public void UpdateWormholes()
+        {
+            for (int i = 0; i < wormholeList.Count; i++)
+            {
+                wormholeList[i].UpdatePlayers(playerList);
+            }
+        }
         public void UpdatePlayers()
         {
 
@@ -54,6 +62,11 @@ namespace TreasureHunt
                 MovePlayers();
             }
 
+            if (wormholeList.Count > 0)
+            {
+
+                UpdateWormholes();
+            }
 
         }
         public void CheckIsTreasureFound()
@@ -160,20 +173,6 @@ namespace TreasureHunt
 
     }
 
-  /*public class AlonsoPlayer : Player
-    {
-        public string coolness;
-        public string someChange;
-
-        public AlonsoPlayer(double x, double y) : base(x,y)
-        {
-            coolness = "very cool";
-        }
-
-
-    }
-    */
-
     public class AlonsoPlayer : Player
     {
 
@@ -203,6 +202,8 @@ namespace TreasureHunt
         public Vector3d location;
         public Vector3d outpoint;
         public double wormholeSize;
+        public int teleportCount;
+        public string statusMessage;
 
         // Constructor
 
@@ -210,6 +211,7 @@ namespace TreasureHunt
         {
             location = new Vector3d(0, 0, 0);
             outpoint = new Vector3d(200, 100, 0);
+            teleportCount = 0;
         }
 
         public WormHole(double x, double y)
@@ -217,7 +219,7 @@ namespace TreasureHunt
             location = new Vector3d(x, y, 0);
             // the old "tolerance" value, is now class property called wormholeSize, taken as an input in constructor
             outpoint = new Vector3d(200, 100, 0);
-
+            teleportCount = 0;
         }
 
         // Methods
@@ -240,6 +242,8 @@ namespace TreasureHunt
                     {
                         playerList[i].location.X = outpoint.X;
                         playerList[i].location.Y = outpoint.Y;
+                        teleportCount++;
+                        statusMessage = string.Format("number of teleports : {0}", teleportCount);
                     }
 
                 }
