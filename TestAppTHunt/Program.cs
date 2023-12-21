@@ -21,6 +21,30 @@ namespace TestAppTHunt
             double xSize = 600;
             double ySize = 300;
             double numberOfAgents = 20;
+       
+
+            //NEW Instantiate wormholes and add em to the wormholeList of StaticGame
+            int numberOfWormholes = 3;
+
+        
+
+            // Generate and initialize the wormholes
+            Random randomWormhole = new Random(8938);
+            for (int i = 0; i < numberOfWormholes; i++)
+            {
+
+                double wormholeX = randomWormhole.NextDouble() * xSize;
+                double wormholeY = randomWormhole.NextDouble() * ySize;
+             
+
+
+
+                // Instantiate a wormhole
+                WormHole wormhole = new WormHole(wormholeX, wormholeY);
+
+                // list of wormholes in the space board
+                StaticGame.wormholeList.Add(wormhole);
+            }
 
 
             StaticGame = new Game(xSize, ySize);

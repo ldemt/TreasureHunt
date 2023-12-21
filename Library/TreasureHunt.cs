@@ -22,6 +22,7 @@ namespace TreasureHunt
         public bool isTreasureFound;
         public double xSize;
         public double ySize;
+        public List<WormHole> wormholeList;
 
         // Constructor
         public Game(double myXSize, double myYSize)
@@ -211,11 +212,10 @@ namespace TreasureHunt
             outpoint = new Vector3d(200, 100, 0);
         }
 
-        public WormHole(double x, double y, double myWormholeSize)
+        public WormHole(double x, double y)
         {
             location = new Vector3d(x, y, 0);
             // the old "tolerance" value, is now class property called wormholeSize, taken as an input in constructor
-            wormholeSize = myWormholeSize;
             outpoint = new Vector3d(200, 100, 0);
 
         }
@@ -226,7 +226,7 @@ namespace TreasureHunt
         {
 
             // tolerance is now rewritten as "wormholeSize" and is a class property
-
+            double wormholeSize = 30;
 
             // Same method as we worked together in class, it works, didnt changed anything
             for (int i = 0; i < playerList.Count; i++)
