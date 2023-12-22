@@ -66,13 +66,16 @@ namespace TestAppTHunt
                 HugoFollower follower = new HugoFollower(player);
                 // Add them to the list of players belonging to the space.
                 
-                // add obstacle
-                Obstacle obstacle = new TreasureHunt.Obstacle(20,20,20,20);
+               
+                
                 // Add it to the list of balls belonging to the space.
                 StaticGame.playerList.Add(player);
                 StaticGame.playerList.Add(follower);
             }
 
+            // add obstacle
+            Obstacle obstacle = new Obstacle(20, 20, 20, 20);
+            StaticGame.obstacles.Add(obstacle);
             // Declare and instantiate here one (or several ?) of your custom players
             double x = 20;
             double y = 20;

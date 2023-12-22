@@ -50,7 +50,7 @@ namespace TreasureHunt
 
             obstacles = new List<Obstacle>();
 
-            obstacles = new List<Obstacle>();
+            
             
         }
 
@@ -62,6 +62,8 @@ namespace TreasureHunt
             obstacles.Add(new Obstacle(200, 250, 50, 10));
             obstacles.Add(new Obstacle(400, 150, 50, 10));
         }
+
+        // TODO Luca : add a method "UpdateObstacles", inspire from the UpdateTeams() and UpdateWormholes() method.
 
         public void UpdateTeams()
         {
@@ -109,7 +111,6 @@ namespace TreasureHunt
             {
                 // Check if player is near treasure, if yes, put isTreasureFound to True
                 
-
                 if (playerList[i].location.EpsilonEquals(treasure.GetLocation(),tolerance))
                 { 
                 isTreasureFound=true;
@@ -409,6 +410,20 @@ public class Treasure
             leader = myLeader;
             follower = myFollower;
         }
+
+        public void MoveTeam()
+        {
+
+            leader.Move();
+            Point3d myLocation = new Point3d();
+            myLocation = (Point3d)leader.location;
+            follower.location.X = myLocation.X;
+            follower.location.Y = myLocation.Y;
+            follower.location.Z = myLocation.Z;
+
+            follower.Move();
+        }
+
     }
     public class AlonsoPlayer : Player
     {
@@ -449,6 +464,8 @@ public class Treasure
             location = new Vector3d(0, 0, 0);
             outpoint = new Vector3d(200, 100, 0);
             teleportCount = 0;
+            // tolerance is now rewritten as "wormholeSize" and is a class property
+            wormholeSize = 30;
         }
 
         public WormHole(double x, double y)
@@ -457,6 +474,8 @@ public class Treasure
             // the old "tolerance" value, is now class property called wormholeSize, taken as an input in constructor
             outpoint = new Vector3d(200, 100, 0);
             teleportCount = 0;
+            // tolerance is now rewritten as "wormholeSize" and is a class property
+            wormholeSize = 30;
         }
 
         // Methods
@@ -464,8 +483,7 @@ public class Treasure
         public void UpdatePlayers(List<Player> playerList)
         {
 
-            // tolerance is now rewritten as "wormholeSize" and is a class property
-            double wormholeSize = 30;
+            
 
             // Same method as we worked together in class, it works, didnt changed anything
             for (int i = 0; i < playerList.Count; i++)
@@ -487,18 +505,7 @@ public class Treasure
             }
 
         }
-        public void MoveTeam()
-        {
-
-            leader.Move();
-            Point3d myLocation = new Point3d();
-            myLocation = (Point3d)leader.location;
-            follower.location.X = myLocation.X;
-            follower.location.Y = myLocation.Y;
-            follower.location.Z = myLocation.Z;
-
-            follower.Move();
-        }
+        
     }
     // New class for obstacles
     public class Obstacle
@@ -520,6 +527,8 @@ public class Treasure
             Rotation = 15; // Initial rotation angle
             RotationSpeed = 40; // Initial rotation speed
         }
+
+        // TODO Luca : method to compare obstacle and players position (inspire from Wormhole UpdatePlayers method)
 
         // Method to rotate the obstacle
         public void Rotate()
