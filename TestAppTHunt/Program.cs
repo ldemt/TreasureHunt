@@ -84,6 +84,7 @@ namespace TestAppTHunt
             //CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
             //AlonsoPlayer alonsoPlayer = new AlonsoPlayer(new Vector3d(10,10,0), new Vector3d(1,1,0));
             VictorSierraPlayer vsPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2,0,0,600,300);
+            HayderPlayer myCustomPlayer = new HayderPlayer(10,10,0,0,600,300,new Rhino.Geometry.Vector3d(10,10,0));
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(vsPlayer);
             //StaticGame.playerList.Add(myCustomPlayer);
