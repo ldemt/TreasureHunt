@@ -319,6 +319,23 @@ namespace TreasureHunt
 
         }
 
+        public void TeleportAtBoundary(double lowerBoundX, double higherBoundX, double lowerBoundY, double higherBoundY)
+
+        {
+
+            // Wrap around the bounds
+            // Here simply if it reaches upper bound the y value returns to lower bound
+            // And the same with the X on the sides
+
+            if (location.X < lowerBoundX) location.X = higherBoundX;
+            else if (location.X > higherBoundX) location.X = lowerBoundX;
+
+            if (location.Y < lowerBoundY) location.Y = higherBoundY;
+            else if (location.Y > higherBoundY) location.Y = lowerBoundY;
+
+
+        }
+
 
     }
 
@@ -603,16 +620,17 @@ namespace TreasureHunt
                 {
 
                     if (playerList[i].location.Y <= location.Y + wormholeSize && playerList[i].location.Y >= location.Y - wormholeSize)
-                        
 
-                            {
-                                playerList[i].location.X = outpoint.X;
-                                playerList[i].location.Y = outpoint.Y;
-                                teleportCount++;
-                                statusMessage = string.Format("number of teleports : {0}", teleportCount);
-                            }
+
+                    {
+                        playerList[i].location.X = outpoint.X;
+                        playerList[i].location.Y = outpoint.Y;
+                        teleportCount++;
+                        statusMessage = string.Format("number of teleports : {0}", teleportCount);
+                    }
+                }
+            }
         }
-
     }
 
 
@@ -632,9 +650,14 @@ namespace TreasureHunt
         private bool zigzagDirection = true;
         private int movesBeforeTurn;
 
-        public HayderPlayer (double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d mySpeed)
-          : base (x, y)
+        public HayderPlayer(double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d mySpeed)
+       : base(x, y)
         {
+            lowerBoundX = myLowerBoundX;
+            lowerBoundY = myLowerBoundY;
+            higherBoundX = myHigherBoundX;
+            higherBoundY = myHigherBoundY;
+            speed = mySpeed;
             movesBeforeTurn = 0;
         }
 
@@ -662,7 +685,7 @@ namespace TreasureHunt
                 location.Y += 50;
             }
                         
-                }
+                
 
             // Check if moving beyond bounds in Y-axis and adjust speed to stay within bounds
             if (location.Y > higherBoundY - locTolerance)
@@ -686,33 +709,29 @@ namespace TreasureHunt
 
                 // Toggle between X and Y movement
                 if (zigzagDirection)
-                // Turn
 
+                {
+                    speed.Y = -speed.Y;
+
+                }
+
+                movesBeforeTurn = 0;
             }
 
+            // Move within boundaries
+            location.X += speed.X;
+            location.Y += speed.Y;
 
+            stepsNumber++;
 
-        }
-
-
-        public void TeleportAtBoundary(double lowerBoundX, double higherBoundX, double lowerBoundY, double higherBoundY)
-
-        {
-
-            // Wrap around the bounds
-            // Here simply if it reaches upper bound the y value returns to lower bound
-            // And the same with the X on the sides
-
-            if (location.X < lowerBoundX) location.X = higherBoundX;
-            else if (location.X > higherBoundX) location.X = lowerBoundX;
-
-            if (location.Y < lowerBoundY) location.Y = higherBoundY;
-            else if (location.Y > higherBoundY) location.Y = lowerBoundY;
-
-
+            statusMessage = string.Format("number of steps: {0}, lowerBoundX: {1:0.00}, higherBoundX: {2:0.00}", stepsNumber, lowerBoundX, higherBoundX);
         }
 
     }
+
+
+
+}
     // New class for obstacles
     public class Obstacle
     {
@@ -724,13 +743,7 @@ namespace TreasureHunt
         public double RotationSpeed { get; private set; }
 
 
-                {
-                    speed.Y = -speed.Y;
-
-                }
-
-                movesBeforeTurn = 0;
-            }
+                
         // Constructor with four arguments
         public Obstacle(double x, double y, double width, double height)
         {
@@ -761,6 +774,6 @@ namespace TreasureHunt
         }
     }
 
-    }
+    
 
-}
+
