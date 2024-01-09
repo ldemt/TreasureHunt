@@ -56,22 +56,22 @@ namespace TestAppTHunt
             double randomX;
             double randomY;
 
-            for (int i = 0; i < numberOfAgents; i++)
-            {
-                randomX = random.NextDouble() * xSize;
-                randomY = random.NextDouble() * ySize;
+            //for (int i = 0; i < numberOfAgents; i++)
+            //{
+            //    randomX = random.NextDouble() * xSize;
+            //    randomY = random.NextDouble() * ySize;
                 
-                Player player = new Player(randomX, randomY);
-                // Instantiate Hugo agents (one follower for each player)
-                HugoFollower follower = new HugoFollower(player);
-                // Add them to the list of players belonging to the space.
+            //    Player player = new Player(randomX, randomY);
+            //    // Instantiate Hugo agents (one follower for each player)
+            //    HugoFollower follower = new HugoFollower(player);
+            //    // Add them to the list of players belonging to the space.
                 
                
                 
-                // Add it to the list of balls belonging to the space.
-                StaticGame.playerList.Add(player);
-                StaticGame.playerList.Add(follower);
-            }
+            //    // Add it to the list of balls belonging to the space.
+            //    StaticGame.playerList.Add(player);
+            //    StaticGame.playerList.Add(follower);
+            //}
 
             // add obstacle
             Obstacle obstacle = new Obstacle(20, 20, 20, 20);
@@ -79,26 +79,27 @@ namespace TestAppTHunt
             // Declare and instantiate here one (or several ?) of your custom players
             double x = 20;
             double y = 20;
-            ZigzagPlayer myCustomPlayer = new ZigzagPlayer(x, y, 0, 0, 600, 300);
-            SpiralMovement myCustomPlayer2 = new SpiralMovement(20, 50);
+            //ZigzagPlayer myCustomPlayer = new ZigzagPlayer(x, y, 0, 0, 600, 300);
+            //SpiralMovement myCustomPlayer2 = new SpiralMovement(20, 50);
             //CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
-            AlonsoPlayer alonsoPlayer = new AlonsoPlayer(new Vector3d(10,10,0), new Vector3d(1,1,0));
-            VictorSierraPlayer vsPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2);
+            //AlonsoPlayer alonsoPlayer = new AlonsoPlayer(new Vector3d(10,10,0), new Vector3d(1,1,0));
+            VictorSierraPlayer vsPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2,0,0,600,300);
             // Add here your custom player to the player list!
-            StaticGame.playerList.Add(myCustomPlayer);
-            StaticGame.playerList.Add(myCustomPlayer2);
+            StaticGame.playerList.Add(vsPlayer);
+            //StaticGame.playerList.Add(myCustomPlayer);
+            //StaticGame.playerList.Add(myCustomPlayer2);
 
             // Adding Tin player classes
-            TinLeader tinLeader = new TinLeader(10,10);
-            TinFollower tinFollower = new TinFollower(10, 10, xSize, ySize);
-            Team team = new Team(tinLeader, tinFollower);
+            //TinLeader tinLeader = new TinLeader(10,10);
+            //TinFollower tinFollower = new TinFollower(10, 10, xSize, ySize);
+            //Team team = new Team(tinLeader, tinFollower);
 
-            StaticGame.playerList.Add(tinLeader);
-            StaticGame.playerList.Add(tinFollower);
-            StaticGame.teamList.Add(team);
+            // StaticGame.playerList.Add(tinLeader);
+            //StaticGame.playerList.Add(tinFollower);
+            //StaticGame.teamList.Add(team);
 
             //StaticGame.playerList.Add(myCustomPlayer);
-            StaticGame.playerList.Add(alonsoPlayer);
+            //StaticGame.playerList.Add(alonsoPlayer);
 
         }
 

@@ -178,6 +178,7 @@ namespace TreasureHunt
         public Vector3d location;
         public int stepsNumber;
         public Vector3d speed;
+        public Vector3d drift;
 
         public string statusMessage;
         public bool treasureFound = false;
@@ -235,13 +236,20 @@ namespace TreasureHunt
         private bool turnClockwise = true; // Direction of the turn
         public Vector3d drift;
         protected bool moveRight = true;
+        double lowerBoundX;
+        double lowerBoundY;
+        double higherBoundX;
+        double higherBoundY;
 
-        public VictorSierraPlayer(double x, double y, double speedX, double speedY, double driftX, double driftY)
+        public VictorSierraPlayer(double x, double y, double speedX, double speedY, double driftX, double driftY, double lowerBoundX, double lowerBoundY, double higherBoundX, double higherBoundY)
           : base(x, y, speedX, speedY)
         {
 
             drift = new Vector3d(driftX, driftY, 0);
-
+            this.lowerBoundX = lowerBoundX;
+            this.lowerBoundY = lowerBoundY;
+            this.higherBoundX = higherBoundX;
+            this.higherBoundY = higherBoundY;
         }
 
         public override void Move()
@@ -263,17 +271,36 @@ namespace TreasureHunt
                     // Turn
                     Turn();
                 }
+
+                // Reset steps since turn
+
+                stepsSinceTurn = 0;
             }
 
-            // Reset steps since turn
+            if (stepsSinceSkip >= triangleSize * 3)
+            {
 
-            stepsSinceTurn = 0;
+                // Turn
+
+                stepsSinceSkip = 0;
+            }
+
+
+            // Wrap around the bounds
+            // Here simply if it reaches upper bound the y value returns to lower bound
+            // And the same with the X on the sides
+
+            if (location.X < lowerBoundX) location.X = higherBoundX;
+            else if (location.X > higherBoundX) location.X = lowerBoundX;
+
+            if (location.Y < lowerBoundY) location.Y = higherBoundY;
+            else if (location.Y > higherBoundY) location.Y = lowerBoundY;
 
             if (treasureFound) statusMessage = "Treasure found!!";
             else statusMessage = "V-S";
         }
 
-        private void Turn()
+            private void Turn()
         {
             // Change direction based on the turn
 
