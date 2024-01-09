@@ -13,6 +13,16 @@ using Grasshopper.Kernel.Types;
 
 namespace TreasureHunt
 {
+    public static class RandomProvider
+    {
+        private static readonly Random _random = new Random();
+
+        public static Random Instance
+        {
+            get { return _random; }
+        }
+    }
+
     public class Game
     {
         // Properties
@@ -38,8 +48,8 @@ namespace TreasureHunt
 
             // Generate a treasure at a random location
             Random random = new Random();
-            double randomX = random.NextDouble() * xSize;
-            double randomY = random.NextDouble() * ySize;
+            double randomX = RandomProvider.Instance.NextDouble() * xSize;
+            double randomY = RandomProvider.Instance.NextDouble() * ySize;
             double modif = 100;
             treasure = new Treasure(randomX, randomY);
 
@@ -129,7 +139,7 @@ namespace TreasureHunt
             for (int i = 0; i < playerList.Count; i++)
             {
 
-                double tolerance = 10;
+                double tolerance = 0;
                 // Check if player is inside boundaries, if not, make it bounce
                 if (playerList[i].location.X > xSize - tolerance || playerList[i].location.X < 0 + tolerance)
                 {
