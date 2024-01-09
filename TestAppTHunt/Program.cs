@@ -40,7 +40,7 @@ namespace TestAppTHunt
             }
 
             // Declare and instantiate here one (or several ?) of your custom players
-            CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
+            HayderPlayer myCustomPlayer = new HayderPlayer(10,10,0,0,600,300,new Rhino.Geometry.Vector3d(10,10,0));
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
 

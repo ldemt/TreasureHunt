@@ -159,17 +159,7 @@ namespace TreasureHunt
 
     }
 
-    public class HayderPlayer : Player
-    {
-        public string coolness;
 
-        public CustomPlayer(double x, double y) : base(x,y)
-        {
-            coolness = "very cool";
-        }
-
-
-    }
 
 
     public class HayderPlayer : Player
@@ -187,7 +177,7 @@ namespace TreasureHunt
         private int movesBeforeTurn;
 
         public HayderPlayer (double x, double y, double myLowerBoundX, double myLowerBoundY, double myHigherBoundX, double myHigherBoundY, Vector3d mySpeed)
-          : base (x, y, myLowerBoundX, myLowerBoundY, myHigherBoundX, myHigherBoundY, mySpeed)
+          : base (x, y)
         {
             movesBeforeTurn = 0;
         }
