@@ -83,7 +83,7 @@ namespace TestAppTHunt
             SpiralMovement myCustomPlayer2 = new SpiralMovement(20, 50);
             //CustomPlayer myCustomPlayer = new CustomPlayer(10,10);
             AlonsoPlayer alonsoPlayer = new AlonsoPlayer(new Vector3d(10,10,0), new Vector3d(1,1,0));
-            VictorSierraPlayer myCustomPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2);
+            VictorSierraPlayer vsPlayer = new VictorSierraPlayer(20, 20, 5, 5, 2, 2);
             // Add here your custom player to the player list!
             StaticGame.playerList.Add(myCustomPlayer);
             StaticGame.playerList.Add(myCustomPlayer2);

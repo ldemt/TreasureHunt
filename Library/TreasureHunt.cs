@@ -21,14 +21,13 @@ namespace TreasureHunt
         public List<Team> teamList;
         public Treasure treasure;
         public bool isTreasureFound;
-        public bool GenerateObstacle; 
+        public bool GenerateObstacle;
         public double xSize;
         public double ySize;
         public List<Obstacle> obstacles;
         public List<WormHole> wormholeList;
-        // Constructor
-        
-        
+
+
 
         // Constructor
         public Game(double myXSize, double myYSize)
@@ -50,8 +49,8 @@ namespace TreasureHunt
 
             obstacles = new List<Obstacle>();
 
-            
-            
+
+
         }
 
         // Methods
@@ -67,7 +66,7 @@ namespace TreasureHunt
 
         public void UpdateTeams()
         {
-        
+
 
             for (int i = 0; i < teamList.Count; i++)
             {
@@ -104,6 +103,8 @@ namespace TreasureHunt
 
         }
 
+
+
         public void CheckIsTreasureFound()
         {
             double tolerance = 10;
@@ -111,11 +112,11 @@ namespace TreasureHunt
             for (int i = 0; i < playerList.Count; i++)
             {
                 // Check if player is near treasure, if yes, put isTreasureFound to True
-                
-                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(),tolerance))
-                { 
-                isTreasureFound=true;
-                
+
+                if (playerList[i].location.EpsilonEquals(treasure.GetLocation(), tolerance))
+                {
+                    isTreasureFound = true;
+
                 }
 
 
@@ -146,16 +147,16 @@ namespace TreasureHunt
 
         }
 
-    public void RotateObstacles()
-    {
-        foreach (Obstacle obstacle in obstacles)
+        public void RotateObstacles()
         {
-            obstacle.Rotate();
+            foreach (Obstacle obstacle in obstacles)
+            {
+                obstacle.Rotate();
+            }
         }
     }
-}
 
-public class Treasure
+    public class Treasure
     {
         // Properties
         private Vector3d location;
@@ -173,11 +174,11 @@ public class Treasure
 
     public class Player
     {
-        
+
         public Vector3d location;
         public int stepsNumber;
         public Vector3d speed;
-        
+
         public string statusMessage;
         public bool treasureFound = false;
 
@@ -201,7 +202,7 @@ public class Treasure
         {
             location = new Vector3d(x, y, 0);
             speed = new Vector3d(speedX, speedY, 0);
-            
+
         }
 
         // Methods
@@ -267,10 +268,33 @@ public class Treasure
             // Reset steps since turn
 
             stepsSinceTurn = 0;
+
+            if (treasureFound) statusMessage = "Treasure found!!";
+            else statusMessage = "V-S";
         }
 
+        private void Turn()
+        {
+            // Change direction based on the turn
+
+            turnClockwise = turnClockwise;
+
+            // Update distance for the next step
+
+            // Rotate the speed vector based on the turn angle
+
+            double radians = turnAngle * (Math.PI / 180.0);
+            double newX = speed.X * Math.Cos(radians) - (turnClockwise ? 1 : -1) * speed.Y * Math.Sin(radians);
+            double newY = (turnClockwise ? 1 : -1) * speed.X * Math.Sin(radians) + speed.Y * Math.Cos(radians);
+
+            speed.X = newX;
+            speed.Y = newY;
+
+        }
+
+
     }
-    }
+
 
     public class SpiralMovement : Player
     {
@@ -391,10 +415,8 @@ public class Treasure
             return new Vector3d(randomX, randomY, 0);
         }
 
-                // Reset steps since turn
 
-                stepsSinceTurn = 0;
-            }
+    }
 
     public class HugoFollower : Player
     {
@@ -433,7 +455,7 @@ public class Treasure
         public double higherBoundX;
         public double higherBoundY;
 
-        public TinFollower(double x, double y,double myHigherBoundX, double myHigherBoundY)
+        public TinFollower(double x, double y, double myHigherBoundX, double myHigherBoundY)
         : base(x, y) {
 
             lowerBoundX = 0;
@@ -462,7 +484,7 @@ public class Treasure
             location.Z += randomVector.Z;
         }
 
-            
+
     }
     public class Team
     {
@@ -510,8 +532,8 @@ public class Treasure
 
 
 
-    public class WormHole 
-        
+    public class WormHole
+
     {
         // Properties
         public Vector3d location;
@@ -546,8 +568,6 @@ public class Treasure
         public void UpdatePlayers(List<Player> playerList)
         {
 
-            
-
             // Same method as we worked together in class, it works, didnt changed anything
             for (int i = 0; i < playerList.Count; i++)
             {
@@ -556,31 +576,26 @@ public class Treasure
                 {
 
                     if (playerList[i].location.Y <= location.Y + wormholeSize && playerList[i].location.Y >= location.Y - wormholeSize)
-            if (stepsSinceSkip >= triangleSize * 3)
-            {
+                        
 
-                    {
-                        playerList[i].location.X = outpoint.X;
-                        playerList[i].location.Y = outpoint.Y;
-                        teleportCount++;
-                        statusMessage = string.Format("number of teleports : {0}", teleportCount);
-                    }
+                            {
+                                playerList[i].location.X = outpoint.X;
+                                playerList[i].location.Y = outpoint.Y;
+                                teleportCount++;
+                                statusMessage = string.Format("number of teleports : {0}", teleportCount);
+                            }
 
+                        
                 }
-            }
 
                 // Turn
 
-                stepsSinceSkip = 0;
             }
 
 
-            
-
-            if (treasureFound) statusMessage = "Treasure found!!";
-            else statusMessage = "V-S";
 
         }
+
 
         public void TeleportAtBoundary(double lowerBoundX, double higherBoundX, double lowerBoundY, double higherBoundY)
 
@@ -598,7 +613,7 @@ public class Treasure
 
 
         }
-        
+
     }
     // New class for obstacles
     public class Obstacle
@@ -610,19 +625,6 @@ public class Treasure
         public double Rotation { get; private set; }
         public double RotationSpeed { get; private set; }
 
-        private void Turn()
-        {
-            // Change direction based on the turn
-
-            turnClockwise = turnClockwise;
-
-            // Update distance for the next step
-
-            // Rotate the speed vector based on the turn angle
-
-            double radians = turnAngle * (Math.PI / 180.0);
-            double newX = speed.X * Math.Cos(radians) - (turnClockwise ? 1 : -1) * speed.Y * Math.Sin(radians);
-            double newY = (turnClockwise ? 1 : -1) * speed.X * Math.Sin(radians) + speed.Y * Math.Cos(radians);
 
         // Constructor with four arguments
         public Obstacle(double x, double y, double width, double height)
@@ -633,9 +635,8 @@ public class Treasure
             Height = height;
             Rotation = 15; // Initial rotation angle
             RotationSpeed = 40; // Initial rotation speed
-        }
-            speed.X = newX;
-            speed.Y = newY;
+
+
         }
 
         // TODO Luca : method to compare obstacle and players position (inspire from Wormhole UpdatePlayers method)
@@ -645,6 +646,7 @@ public class Treasure
         {
 
             Rotation += RotationSpeed;
+        }
         private int CalculateStepsForDistance(double distance)
         {
             // Adjust this factor to control the smoothness of the turns
@@ -654,9 +656,5 @@ public class Treasure
         }
     }
 
-            // I can add logic here to handle rotation of the obstacle
-            // For example, updating the angle or performing rotation calculations
-            // based on the RotationSpeed
-        }
-    }
+
 }
